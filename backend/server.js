@@ -1,4 +1,5 @@
 const { GraphQLServer } = require('graphql-yoga')
+const connectDB = require('./config/db')
 
 const typeDefs = `
   type Query {
@@ -14,4 +15,4 @@ const resolvers = {
 
 const server = new GraphQLServer({ typeDefs, resolvers })
 
-server.start(() => console.log('Graphql server is running'))
+server.start(connectDB())
