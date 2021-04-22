@@ -1,6 +1,6 @@
 import { ThemeProvider } from '@material-ui/core/styles'
 
-const theme = {}
+import theme from './theme'
 
 function App() {
   return (
