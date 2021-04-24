@@ -1,12 +1,17 @@
 type Query {
   staffs: [Staff!]!
+  staff(id: ID!): Staff!
+  stores: [Store!]!
+  store(id: ID!): Store!
 }
 
 type Mutation {
   createStaff(data: CreateStaffData!): Staff!
+  createStore(data: CreateStoreData!): Store!
 }
 
 type Staff {
+  id: ID!
   firstName: String!
   lastName: String!
   gender: Gender!
@@ -20,6 +25,16 @@ type Staff {
   address: Address!
 }
 
+type Store {
+  id: ID!
+  areaCode: Int!
+  storeManagerId: ID!
+  storeName: String!
+  storeLocation: String!
+  storeAddress: String!
+  otherDetails: String
+}
+
 type Address {
   line1: String!
   line2: String
@@ -31,12 +46,6 @@ type Address {
   otherAddressDetails: String
 }
 
-enum Gender {
-  male
-  female
-}
-
-
 input CreateStaffData {
   firstName: String!
   lastName: String!
@@ -46,6 +55,8 @@ input CreateStaffData {
   dateOfJoin: String!
   dateOfBirth: String!
   dateOfLeft: String
+  jobTitle: String!
+  jobDescription: String!
   commisionPercentage: Int
   otherDetails: String
   address: CreateStaffAddressData!
@@ -60,4 +71,18 @@ input CreateStaffAddressData {
   stateProvinceCountry: String!
   country: String!
   otherAddressDetails: String
+}
+
+input CreateStoreData {
+  areaCode: Int!
+  storeManagerId: ID!
+  storeName: String!
+  storeLocation: String!
+  storeAddress: String!
+  otherDetails: String
+}
+
+enum Gender {
+  male
+  female
 }
