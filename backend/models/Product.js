@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 
 const productSchema = mongoose.Schema({
+  storeId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'Store',
+  },
   productName: {
     type: String,
     required: true,
@@ -9,7 +14,11 @@ const productSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  productPrice: {
+  nationalProductPrice: {
+    type: Number,
+    required: true,
+  },
+  nationalReorderQuantity: {
     type: Number,
     required: true,
   },
