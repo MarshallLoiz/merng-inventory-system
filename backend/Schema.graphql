@@ -1,0 +1,63 @@
+type Query {
+  staffs: [Staff!]!
+}
+
+type Mutation {
+  createStaff(data: CreateStaffData!): Staff!
+}
+
+type Staff {
+  firstName: String!
+  lastName: String!
+  gender: Gender!
+  officePhone: Int!
+  emailAddress: String!
+  dateOfBirth: String!
+  dateOfJoin: String!
+  dateOfLeft: String
+  commisionPercentage: Int
+  otherDetails: String
+  address: Address!
+}
+
+type Address {
+  line1: String!
+  line2: String
+  line3: String
+  city: String!
+  zipOrPasscode: Int!
+  stateProvinceCountry: String!
+  country: String!
+  otherAddressDetails: String
+}
+
+enum Gender {
+  male
+  female
+}
+
+
+input CreateStaffData {
+  firstName: String!
+  lastName: String!
+  gender: Gender!
+  officePhone: Int!
+  emailAddress: String!
+  dateOfJoin: String!
+  dateOfBirth: String!
+  dateOfLeft: String
+  commisionPercentage: Int
+  otherDetails: String
+  address: CreateStaffAddressData!
+}
+
+input CreateStaffAddressData {
+  line1: String!
+  line2: String
+  line3: String
+  city: String!
+  zipOrPasscode: Int!
+  stateProvinceCountry: String!
+  country: String!
+  otherAddressDetails: String
+}
