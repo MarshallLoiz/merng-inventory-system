@@ -31,6 +31,14 @@ const staffSchema = mongoose.Schema({
     type: Date,
     required: true,
   },
+  jobTitle: {
+    type: String,
+    required: true,
+  },
+  jobDescription: {
+    type: String,
+    required: true,
+  },
   commisionPercentage: Number,
   otherDetails: String,
   address: {
