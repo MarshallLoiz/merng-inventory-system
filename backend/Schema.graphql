@@ -48,6 +48,7 @@ type Address {
 }
 
 input CreateStaffData {
+  storeId: ID!
   firstName: String!
   lastName: String!
   gender: Gender!
