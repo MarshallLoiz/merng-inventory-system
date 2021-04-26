@@ -15,11 +15,14 @@ const server = new GraphQLServer({
     Query,
     Mutation,
   },
-  context: {
-    Staff,
-    Store,
-    Product,
-    Sales,
+  context(request) {
+    return {
+      Staff,
+      Store,
+      Product,
+      Sales,
+      request,
+    }
   },
 })
 
