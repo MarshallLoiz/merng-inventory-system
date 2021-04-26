@@ -7,7 +7,12 @@ type Query {
 
 type Mutation {
   createStaff(data: CreateStaffData!): Staff!
-  createStore(data: CreateStoreData!): Store!
+  createStore(data: CreateStoreData!): StorefAuthPayload!
+}
+
+type StorefAuthPayload {
+  token: String!
+  store: Store!
 }
 
 type Staff {
