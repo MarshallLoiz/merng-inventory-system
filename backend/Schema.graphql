@@ -12,6 +12,7 @@ type Mutation {
 
 type Staff {
   id: ID!
+  store: Store!
   firstName: String!
   lastName: String!
   gender: Gender!
@@ -74,8 +75,10 @@ input CreateStaffAddressData {
 }
 
 input CreateStoreData {
+  email: String!
+  password: String!
+  confirmPassword: String!
   areaCode: Int!
-  storeManagerId: ID!
   storeName: String!
   storeLocation: String!
   storeAddress: String!
