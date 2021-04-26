@@ -1,17 +1,13 @@
 const Mutation = {
   async createStaff(parent, { data }, { Staff }, info) {
-    const newStaff = new Staff(data)
+    const staff = await Staff.create(data)
 
-    await newStaff.save()
-
-    return newStaff
+    return staff
   },
   async createStore(parent, { data }, { Store }, info) {
-    const newStore = new Store(data)
+    const store = await Store.create(data)
 
-    await newStore.save()
-
-    return newStore
+    return store
   },
 }
 
