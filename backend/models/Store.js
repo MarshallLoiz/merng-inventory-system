@@ -13,7 +13,6 @@ const storeSchema = mongoose.Schema({
   password: {
     type: String,
     required: true,
-    select: false,
   },
   confirmPassword: {
     type: String,
@@ -47,11 +46,17 @@ const storeSchema = mongoose.Schema({
 storeSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next()
 
-  this.password = await bcrypt.hash(this.password, 12)
+  const salt = await bcrypt.genSalt(10)
+
+  this.password = await bcrypt.hash(this.password, salt)
 
   this.confirmPassword = undefined
   next()
 })
+
+storeSchema.methods.matchPassword = async function (candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password)
+}
 
 const Store = mongoose.model('Store', storeSchema)
 
