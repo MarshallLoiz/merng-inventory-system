@@ -2,8 +2,8 @@ const generateToken = require('../utils/generateToken')
 const getUserId = require('../utils/getUserId')
 
 const Mutation = {
-  async createStore(parent, { data }, { Store }, info) {
-    const store = await Store.create(data)
+  async createStore(parent, { data }, { StoreDocument }, info) {
+    const store = await StoreDocument.create(data)
 
     return {
       store,
@@ -11,8 +11,8 @@ const Mutation = {
     }
   },
 
-  async loginStore(parent, { data }, { Store }, info) {
-    const storeUser = await Store.findOne({ email: data.email })
+  async loginStore(parent, { data }, { StoreDocument }, info) {
+    const storeUser = await StoreDocument.findOne({ email: data.email })
 
     if (storeUser && (await storeUser.matchPassword(data.password))) {
       return {
@@ -24,10 +24,10 @@ const Mutation = {
     }
   },
 
-  async createStaff(parent, { data }, { Staff, request }, info) {
+  async createStaff(parent, { data }, { StaffDocument, request }, info) {
     getUserId(request)
 
-    const staff = await Staff.create(data)
+    const staff = await StaffDocument.create(data)
 
     return {
       staff,
@@ -35,8 +35,8 @@ const Mutation = {
     }
   },
 
-  async loginStaff(parent, { data }, { Staff }, info) {
-    const staff = await Staff.findOne({ email: data.email })
+  async loginStaff(parent, { data }, { StaffDocument }, info) {
+    const staff = await StaffDocument.findOne({ email: data.email })
 
     if (staff && (await staff.matchPassword(data.password))) {
       return {
