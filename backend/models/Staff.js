@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
+const validator = require('validator')
 
 const staffSchema = mongoose.Schema({
   storeId: {
@@ -11,6 +12,8 @@ const staffSchema = mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    lowercase: true,
+    validate: [validator.isEmail, 'Please provide a valid email'],
   },
   password: {
     type: String,
