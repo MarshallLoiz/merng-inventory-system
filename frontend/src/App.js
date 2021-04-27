@@ -1,11 +1,24 @@
 import { ThemeProvider } from '@material-ui/core/styles'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import Login from './screens/Login'
+import Header from './components/Header'
 
-import theme from './theme/main'
+import muiTheme from './theme/muiTheme'
 
-function App() {
+const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <div>MERN-G APP!</div>
+    <ThemeProvider theme={muiTheme}>
+      <Header />
+      <Router>
+        <div className='app-container'>
+          <main className='app-main'>
+            <Switch>
+              <Route exact path='/' />
+              <Route path='/login' component={Login} />
+            </Switch>
+          </main>
+        </div>
+      </Router>
     </ThemeProvider>
   )
 }
