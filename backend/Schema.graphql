@@ -12,6 +12,51 @@ type Mutation {
   loginStaff(data: LoginStaffData!): StaffLoginAuthPayload!
 }
 
+type Staff {
+  id: ID!
+  store: Store!
+  firstName: String!
+  lastName: String!
+  gender: Gender!
+  officePhone: Int!
+  email: String!
+  dateOfBirth: String!
+  dateOfJoin: String!
+  dateOfLeft: String
+  commisionPercentage: Int
+  otherDetails: String
+  address: Address!
+}
+
+type Store {
+  id: ID!
+  areaCode: Int!
+  storeManagerId: ID!
+  storeName: String!
+  storeLocation: String!
+  storeAddress: String!
+  otherDetails: String
+  staffs: [Staff!]!
+}
+
+type Sales {
+  id: ID!
+  staff: Staff!
+  salesDates: String!
+  salesValue: Float!
+  salesCommissions: Float!
+}
+
+type Product {
+  id: ID!
+  store: Store!
+  productName: String!
+  productDescription: String!
+  nationalProductPrice: Float!
+  nationalReorderQuantity: Int!
+  otherProductDetails: String
+}
+
 type StaffLoginAuthPayload {
   token: String!
   staff: Staff!
@@ -32,22 +77,6 @@ type StafffAuthPayload {
   staff: Staff!
 }
 
-type Staff {
-  id: ID!
-  store: Store!
-  firstName: String!
-  lastName: String!
-  gender: Gender!
-  officePhone: Int!
-  email: String!
-  dateOfBirth: String!
-  dateOfJoin: String!
-  dateOfLeft: String
-  commisionPercentage: Int
-  otherDetails: String
-  address: Address!
-}
-
 type Address {
   line1: String!
   line2: String
@@ -62,16 +91,6 @@ type Address {
 enum Gender {
   male
   female
-}
-
-type Store {
-  id: ID!
-  areaCode: Int!
-  storeManagerId: ID!
-  storeName: String!
-  storeLocation: String!
-  storeAddress: String!
-  otherDetails: String
 }
 
 input LoginStoreData {
