@@ -6,13 +6,30 @@ type Query {
 }
 
 type Mutation {
-  createStaff(data: CreateStaffData!): Staff!
+  createStaff(data: CreateStaffData!): StafffAuthPayload!
   createStore(data: CreateStoreData!): StorefAuthPayload!
+  loginStore(data: LoginStoreData!): StoreLoginAuthPayload!
+  loginStaff(data: LoginStaffData!): StaffLoginAuthPayload!
+}
+
+type StaffLoginAuthPayload {
+  token: String!
+  staff: Staff!
+}
+
+type StoreLoginAuthPayload {
+  token: String!
+  store: Store!
 }
 
 type StorefAuthPayload {
   token: String!
   store: Store!
+}
+
+type StafffAuthPayload {
+  token: String!
+  staff: Staff!
 }
 
 type Staff {
@@ -22,23 +39,13 @@ type Staff {
   lastName: String!
   gender: Gender!
   officePhone: Int!
-  emailAddress: String!
+  email: String!
   dateOfBirth: String!
   dateOfJoin: String!
   dateOfLeft: String
   commisionPercentage: Int
   otherDetails: String
   address: Address!
-}
-
-type Store {
-  id: ID!
-  areaCode: Int!
-  storeManagerId: ID!
-  storeName: String!
-  storeLocation: String!
-  storeAddress: String!
-  otherDetails: String
 }
 
 type Address {
@@ -52,13 +59,41 @@ type Address {
   otherAddressDetails: String
 }
 
+enum Gender {
+  male
+  female
+}
+
+type Store {
+  id: ID!
+  areaCode: Int!
+  storeManagerId: ID!
+  storeName: String!
+  storeLocation: String!
+  storeAddress: String!
+  otherDetails: String
+}
+
+input LoginStoreData {
+  email: String!
+  password: String!
+}
+
+
+input LoginStaffData {
+  email: String!
+  password: String!
+}
+
 input CreateStaffData {
   storeId: ID!
+  email: String!
+  password: String!
+  confirmPassword: String!
   firstName: String!
   lastName: String!
   gender: Gender!
   officePhone: Int!
-  emailAddress: String!
   dateOfJoin: String!
   dateOfBirth: String!
   dateOfLeft: String
@@ -91,7 +126,3 @@ input CreateStoreData {
   otherDetails: String
 }
 
-enum Gender {
-  male
-  female
-}
