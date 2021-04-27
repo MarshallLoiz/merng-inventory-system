@@ -2,10 +2,15 @@ const { GraphQLServer } = require('graphql-yoga')
 const Query = require('./resolvers/Query')
 const Mutation = require('./resolvers/Mutation')
 
-const Staff = require('./models/Staff')
-const Store = require('./models/Store')
-const Product = require('./models/Product')
-const Sales = require('./models/Sales')
+const StaffDocument = require('./models/Staff')
+const StoreDocument = require('./models/Store')
+const ProductDocument = require('./models/Product')
+const SalesDocument = require('./models/Sales')
+
+const Staff = require('./resolvers/Staff')
+const Store = require('./resolvers/Store')
+const Product = require('./resolvers/Product')
+const Sales = require('./resolvers/Sales')
 
 const connectDB = require('./config/db')
 
@@ -14,13 +19,17 @@ const server = new GraphQLServer({
   resolvers: {
     Query,
     Mutation,
+    Staff,
+    Store,
+    Sales,
+    Product,
   },
   context(request) {
     return {
-      Staff,
-      Store,
-      Product,
-      Sales,
+      StaffDocument,
+      StoreDocument,
+      ProductDocument,
+      SalesDocument,
       request,
     }
   },
