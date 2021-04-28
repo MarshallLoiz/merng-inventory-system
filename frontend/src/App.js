@@ -1,6 +1,6 @@
 import { ThemeProvider } from '@material-ui/core/styles'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import Login from './screens/Login'
+import Login from './screens/Login/index'
 import Header from './components/Header'
 
 import muiTheme from './theme/muiTheme'
