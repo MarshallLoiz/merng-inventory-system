@@ -32,7 +32,7 @@ const LoginForm = ({ tab }) => {
               variant='outlined'
             />
             <TextField
-              type={isShowPassword ? 'password' : 'text'}
+              type={isShowPassword ? 'text' : 'password'}
               className={classes.loginPasswordTextField}
               label='Password'
               variant='outlined'
