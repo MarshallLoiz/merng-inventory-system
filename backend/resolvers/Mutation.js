@@ -47,6 +47,41 @@ const Mutation = {
       throw new Error('Invalid email or password')
     }
   },
+
+  async updateStaff(parent, { data }, { StaffDocument, request }, info) {
+    const id = getUserId(request)
+
+    const isStoreOwner = id === data.storeId
+
+    if (!isStoreOwner) {
+      throw new Error('This staff is not registered on your store')
+    }
+
+    const updateStaff = await StaffDocument.findByIdAndUpdate(
+      data.staffId,
+      data,
+      {
+        new: true,
+        runValidators: true,
+      }
+    )
+
+    return updateStaff
+  },
+
+  async deleteStaff(parent, { data }, { StaffDocument, request }, info) {
+    const id = getUserId(request)
+
+    const isStoreOwner = id === data.storeId
+
+    if (!isStoreOwner) {
+      throw new Error('This staff is not registered on your store')
+    }
+
+    await StaffDocument.findByIdAndRemove(data.id)
+
+    return 'Staff Deleted'
+  },
 }
 
 module.exports = Mutation

@@ -6,10 +6,12 @@ type Query {
 }
 
 type Mutation {
-  createStaff(data: CreateStaffData!): StafffAuthPayload!
-  createStore(data: CreateStoreData!): StorefAuthPayload!
   loginStore(data: LoginStoreData!): StoreLoginAuthPayload!
   loginStaff(data: LoginStaffData!): StaffLoginAuthPayload!
+  createStaff(data: CreateStaffData!): StafffAuthPayload!
+  createStore(data: CreateStoreData!): StorefAuthPayload!
+  updateStaff(data: UpdateStaffData): Staff!
+  deleteStaff(data: DeleteStaffData!): String
 }
 
 type Staff {
@@ -121,6 +123,31 @@ input CreateStaffData {
   commisionPercentage: Int
   otherDetails: String
   address: CreateStaffAddressData!
+}
+
+input UpdateStaffData {
+  staffId: ID!
+  storeId: ID!
+  email: String
+  password: String
+  confirmPassword: String
+  firstName: String
+  lastName: String
+  gender: Gender
+  officePhone: Int
+  dateOfJoin: String
+  dateOfBirth: String
+  dateOfLeft: String
+  jobTitle: String
+  jobDescription: String
+  commisionPercentage: Int
+  otherDetails: String
+  address: CreateStaffAddressData
+}
+
+input DeleteStaffData {
+  id: ID!
+  storeId: ID!
 }
 
 input CreateStaffAddressData {
