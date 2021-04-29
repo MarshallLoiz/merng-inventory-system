@@ -14,6 +14,12 @@ const Sales = require('./resolvers/Sales')
 
 const connectDB = require('./config/db')
 
+const options = {
+  credentials: true,
+  port: 4000,
+  origin: ['http://localhost:3000'],
+}
+
 const server = new GraphQLServer({
   typeDefs: `${__dirname}/schema.graphql`,
   resolvers: {
@@ -35,4 +41,9 @@ const server = new GraphQLServer({
   },
 })
 
-server.start(connectDB())
+server.start(
+  {
+    cors: options,
+  },
+  () => connectDB()
+)
