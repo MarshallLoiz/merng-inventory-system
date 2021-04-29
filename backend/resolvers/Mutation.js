@@ -11,13 +11,25 @@ const Mutation = {
     }
   },
 
-  async loginStore(parent, { data }, { StoreDocument }, info) {
+  async loginStore(parent, { data }, { StoreDocument, request }, info) {
     const storeUser = await StoreDocument.findOne({ email: data.email })
 
     if (storeUser && (await storeUser.matchPassword(data.password))) {
+      const token = generateToken(storeUser._id)
+
+      const options = {
+        maxAge: 1000 * 60 * 60 * 24,
+        httpOnly: true,
+        secure:
+          request.request.secure ||
+          request.request.headers['x-forwarded-proto'] === 'https',
+      }
+
+      request.response.cookie('jwt', token, options)
+
       return {
         store: storeUser,
-        token: generateToken(storeUser._id),
+        token,
       }
     } else {
       throw new Error('Invalid email or password')
