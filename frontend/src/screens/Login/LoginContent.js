@@ -7,7 +7,7 @@ import SwipeableViews from 'react-swipeable-views'
 import { makeStyles } from '@material-ui/core/styles'
 import LoginForm from './LoginForm'
 
-function TabPanel(props) {
+const TabPanel = (props) => {
   const { children, value, index, ...other } = props
 
   return (
