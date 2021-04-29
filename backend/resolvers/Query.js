@@ -1,10 +1,17 @@
+const getUserId = require('../utils/getUserId')
+
 const Query = {
-  async staffs(parent, args, { StaffDocument }, info) {
-    const staffs = await StaffDocument.find()
+  async staffs(parent, args, { StaffDocument, request }, info) {
+    const id = getUserId(request)
+
+    const staffs = await StaffDocument.find({ storeId: id })
 
     return staffs
   },
+
   async staff(parent, args, { StaffDocument }, info) {
+    getUserId(request)
+
     const staff = await StaffDocument.findById(args.id)
 
     if (!staff) {
@@ -13,6 +20,7 @@ const Query = {
 
     return staff
   },
+
   async stores(parent, args, { StoreDocument }, info) {
     const stores = await StoreDocument.find()
 
