@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import Typography from '@material-ui/core/Typography'
 import Alert from '@material-ui/lab/Alert'
 import TextField from '@material-ui/core/TextField'
@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import FormControl from '@material-ui/core/FormControl'
 import { useMutation } from '@apollo/client'
 import useStyles from '../../jss/login'
@@ -21,6 +22,8 @@ const LoginForm = ({ tab }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+
+  const enabled = password.length > 0 && email.length > 0
 
   const [
     dispatchLogin,
@@ -53,7 +56,11 @@ const LoginForm = ({ tab }) => {
 
   return (
     <div className={classes.login}>
-      {loginError && <Alert severity='error'>{error}</Alert>}
+      {loginError && (
+        <Alert severity='error' className={classes.loginErrorBanner}>
+          {error}
+        </Alert>
+      )}
       <Typography variant='h5'>
         {tab === 0 ? 'Store Login' : 'Staff Login'}
       </Typography>
@@ -92,9 +99,27 @@ const LoginForm = ({ tab }) => {
             disableElevation
             disableRipple
             fullWidth
+            disabled={!enabled}
           >
             Login
+            {loginLoading && (
+              <CircularProgress
+                size={20}
+                color='secondary'
+                className={classes.circularProgressLogin}
+              />
+            )}
           </Button>
+          {tab === 0 && (
+            <>
+              <Typography component='span'>No Account?</Typography>
+              <Link to='/register' className={classes.registerLink}>
+                <Typography component='span' className={classes.registerLink}>
+                  Register here!
+                </Typography>
+              </Link>
+            </>
+          )}
         </div>
       </form>
     </div>

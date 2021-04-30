@@ -9,6 +9,9 @@ const useStyles = makeStyles((theme) => ({
   login: {
     padding: '25px',
   },
+  loginErrorBanner: {
+    marginBottom: '5px',
+  },
   loginFormContainer: {
     marginTop: '20px',
   },
@@ -24,6 +27,16 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: '#0000CD',
     },
+    marginBottom: '10px',
+  },
+  circularProgressLogin: {
+    position: 'absolute',
+    right: '15px',
+  },
+  registerLink: {
+    textDecoration: 'none',
+    marginLeft: '5px',
+    color: 'black',
   },
 }))
 
