@@ -19,7 +19,6 @@ const Mutation = {
 
       const options = {
         maxAge: 1000 * 60 * 60 * 24,
-        httpOnly: true,
         secure:
           request.request.secure ||
           request.request.headers['x-forwarded-proto'] === 'https',
