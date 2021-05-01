@@ -16,7 +16,7 @@ const connectDB = require('./config/db')
 
 const options = {
   credentials: true,
-  port: 4000,
+  port: process.env.PORT,
   origin: ['http://localhost:3000'],
 }
 
