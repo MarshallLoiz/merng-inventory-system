@@ -34,7 +34,6 @@ type Store {
   id: ID!
   areaCode: Int!
   storeName: String!
-  storeLocation: String!
   storeAddress: String!
   otherDetails: String
   staffs: [Staff!]!
@@ -163,7 +162,6 @@ input CreateStoreData {
   confirmPassword: String!
   areaCode: Int!
   storeName: String!
-  storeLocation: String!
   storeAddress: String!
   otherDetails: String
 }
