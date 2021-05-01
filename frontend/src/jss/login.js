@@ -4,7 +4,6 @@ const useStyles = makeStyles((theme) => ({
   loginRoot: {
     width: '30em',
     margin: 'auto',
-    display: 'block',
   },
   login: {
     padding: '25px',
@@ -15,14 +14,8 @@ const useStyles = makeStyles((theme) => ({
   loginFormContainer: {
     marginTop: '20px',
   },
-  loginInputs: {
-    width: '100%',
-  },
-  loginPasswordTextField: {
-    marginTop: '10px',
-    marginBottom: '25px',
-  },
   loginButton: {
+    marginTop: '5px',
     backgroundColor: '#0B72B9',
     '&:hover': {
       backgroundColor: '#0000CD',

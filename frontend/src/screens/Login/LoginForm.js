@@ -65,17 +65,17 @@ const LoginForm = ({ tab }) => {
       </Typography>
       <form onSubmit={submitHandler}>
         <div className={classes.loginFormContainer}>
-          <FormControl className={classes.loginInputs}>
+          <FormControl fullWidth margin='dense'>
             <TextField
-              className={classes.loginEmailTextField}
               label='Email'
               variant='outlined'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+          </FormControl>
+          <FormControl fullWidth margin='dense'>
             <TextField
               type={isShowPassword ? 'text' : 'password'}
-              className={classes.loginPasswordTextField}
               label='Password'
               variant='outlined'
               value={password}
