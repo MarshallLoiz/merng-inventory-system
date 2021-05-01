@@ -8,7 +8,7 @@ type Query {
 type Mutation {
   loginStore(data: LoginStoreData!): StoreLoginAuthPayload!
   loginStaff(data: LoginStaffData!): StaffLoginAuthPayload!
-  createStaff(data: CreateStaffData!): StafffAuthPayload!
+  createStaff(data: CreateStaffData!): Staff!
   createStore(data: CreateStoreData!): StorefAuthPayload!
   updateStaff(data: UpdateStaffData): Staff!
   deleteStaff(data: DeleteStaffData!): String
@@ -73,10 +73,7 @@ type StorefAuthPayload {
   store: Store!
 }
 
-type StafffAuthPayload {
-  token: String!
-  staff: Staff!
-}
+
 
 type Address {
   line1: String!
