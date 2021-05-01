@@ -1,13 +1,18 @@
 const generateToken = require('../utils/generateToken')
 const getUserId = require('../utils/getUserId')
+const createSendCookie = require('../utils/createSendCookie')
 
 const Mutation = {
-  async createStore(parent, { data }, { StoreDocument }, info) {
+  async createStore(parent, { data }, { StoreDocument, request }, info) {
     const store = await StoreDocument.create(data)
+
+    const token = generateToken(store._id)
+
+    createSendCookie(request, token)
 
     return {
       store,
-      token: generateToken(store._id),
+      token,
     }
   },
 
@@ -17,14 +22,7 @@ const Mutation = {
     if (storeUser && (await storeUser.matchPassword(data.password))) {
       const token = generateToken(storeUser._id)
 
-      const options = {
-        maxAge: 1000 * 60 * 60 * 24,
-        secure:
-          request.request.secure ||
-          request.request.headers['x-forwarded-proto'] === 'https',
-      }
-
-      request.response.cookie('jwt', token, options)
+      createSendCookie(request, token)
 
       return {
         store: storeUser,
