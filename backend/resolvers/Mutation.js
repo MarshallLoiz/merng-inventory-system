@@ -40,10 +40,7 @@ const Mutation = {
 
     const staff = await StaffDocument.create(data)
 
-    return {
-      staff,
-      token: generateToken(staff._id),
-    }
+    return staff
   },
 
   async loginStaff(parent, { data }, { StaffDocument }, info) {
