@@ -22,6 +22,7 @@ const LoginForm = ({ tab }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [isShowPassword, setIsShowPassword] = useState(false)
 
   const enabled = password.length > 0 && email.length > 0
 
@@ -29,6 +30,10 @@ const LoginForm = ({ tab }) => {
     dispatchLogin,
     { loading: loginLoading, error: loginError },
   ] = useMutation(LOGIN_STORE)
+
+  const handleClickShowPassword = () => {
+    setIsShowPassword(!isShowPassword)
+  }
 
   const submitHandler = async (event) => {
     event.preventDefault()
@@ -46,12 +51,6 @@ const LoginForm = ({ tab }) => {
     } catch (err) {
       setError(err.message)
     }
-  }
-
-  const [isShowPassword, setIsShowPassword] = useState(false)
-
-  const handleClickShowPassword = () => {
-    setIsShowPassword(!isShowPassword)
   }
 
   return (
