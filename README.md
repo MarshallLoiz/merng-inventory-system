@@ -5,6 +5,8 @@
 #### Create a .env file in the root and add the following
 
 ```
+ENV=development
+PORT=4000
 DB_PASSWORD = need credentials
 MONGO_URI = need credentials
 JWT_SECRET = need credentials
