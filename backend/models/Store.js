@@ -32,10 +32,6 @@ const storeSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  storeLocation: {
-    type: String,
-    required: true,
-  },
   storeAddress: {
     type: String,
     required: true,
