@@ -8,7 +8,21 @@ export const LOGIN_STORE = gql`
         id
         areaCode
         storeName
-        storeLocation
+        storeAddress
+        otherDetails
+      }
+    }
+  }
+`
+
+export const CREATE_STORE = gql`
+  mutation CreateStore($data: CreateStoreData!) {
+    createStore(data: $data) {
+      token
+      store {
+        id
+        areaCode
+        storeName
         storeAddress
         otherDetails
       }
