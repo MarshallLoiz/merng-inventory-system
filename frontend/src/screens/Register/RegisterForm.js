@@ -58,26 +58,38 @@ const RegisterForm = () => {
 
     if (!storeName.length > 0) {
       setStoreNameFieldError(true)
+    } else {
+      setStoreNameFieldError(false)
     }
 
     if (!email.length > 0) {
       setEmailFieldError(true)
+    } else {
+      setEmailFieldError(false)
     }
 
     if (!areaCode.length > 0) {
       setAreaCodeFieldError(true)
+    } else {
+      setAreaCodeFieldError(false)
     }
 
     if (!storeAddress.length > 0) {
       setStoreAddressFieldError(true)
+    } else {
+      setStoreAddressFieldError(false)
     }
 
     if (!password.length > 0) {
       setPasswordFieldError(true)
+    } else {
+      setPasswordFieldError(false)
     }
 
     if (!confirmPassword.length > 0) {
       setConfirmPasswordFieldError(true)
+    } else {
+      setConfirmPasswordFieldError(false)
     }
 
     try {
@@ -107,8 +119,7 @@ const RegisterForm = () => {
       })
       history.push('/')
     } catch (err) {
-      const errorMessage = err.message.split(':')[3].trim()
-      setError(errorMessage)
+      setError(err.message)
     }
   }
 
