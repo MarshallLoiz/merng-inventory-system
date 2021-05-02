@@ -14,11 +14,11 @@ const productSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  nationalProductPrice: {
+  productPrice: {
     type: Number,
     required: true,
   },
-  nationalReorderQuantity: {
+  stock: {
     type: Number,
     required: true,
   },
