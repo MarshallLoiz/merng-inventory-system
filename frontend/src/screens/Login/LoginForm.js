@@ -48,6 +48,7 @@ const LoginForm = ({ tab }) => {
         },
       })
       history.push('/')
+      history.go(0)
     } catch (err) {
       setError(err.message)
     }
