@@ -16,15 +16,16 @@ const useStyles = makeStyles((theme) => ({
   },
   loginButton: {
     marginTop: '5px',
-    backgroundColor: '#0B72B9',
+    backgroundColor: theme.palette.button.backgroundColor,
     '&:hover': {
-      backgroundColor: '#0000CD',
+      backgroundColor: theme.palette.button.backGroundColorhover,
     },
     marginBottom: '10px',
   },
   circularProgressLogin: {
     position: 'absolute',
     right: '15px',
+    color: theme.palette.button.circularProgress,
   },
   registerLink: {
     textDecoration: 'none',

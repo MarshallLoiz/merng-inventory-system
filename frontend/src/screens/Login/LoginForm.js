@@ -104,7 +104,6 @@ const LoginForm = ({ tab }) => {
             {loginLoading && (
               <CircularProgress
                 size={20}
-                color='secondary'
                 className={classes.circularProgressLogin}
               />
             )}

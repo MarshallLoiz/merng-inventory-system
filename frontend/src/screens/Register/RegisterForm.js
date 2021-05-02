@@ -292,7 +292,6 @@ const RegisterForm = () => {
               {registerLoading && (
                 <CircularProgress
                   size={20}
-                  color='secondary'
                   className={classes.circularProgressRegister}
                 />
               )}

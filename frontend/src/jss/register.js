@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   registerRoot: {
     width: '30em',
     margin: 'auto',
@@ -13,9 +13,9 @@ const useStyles = makeStyles({
   },
   registerButton: {
     marginTop: '10px',
-    backgroundColor: '#0B72B9',
+    backgroundColor: theme.palette.button.backgroundColor,
     '&:hover': {
-      backgroundColor: '#0000CD',
+      backgroundColor: theme.palette.button.backGroundColorhover,
     },
     marginBottom: '15px',
   },
@@ -34,7 +34,8 @@ const useStyles = makeStyles({
   circularProgressRegister: {
     position: 'absolute',
     right: '15px',
+    color: theme.palette.button.circularProgress,
   },
-})
+}))
 
 export default useStyles
