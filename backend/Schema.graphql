@@ -72,8 +72,6 @@ type StorefAuthPayload {
   store: Store!
 }
 
-
-
 type Address {
   line1: String!
   line2: String
