@@ -9,7 +9,7 @@ const Query = {
     return staffs
   },
 
-  async staff(parent, args, { StaffDocument }, info) {
+  async staff(parent, args, { StaffDocument, request }, info) {
     getUserId(request)
 
     const staff = await StaffDocument.findById(args.id)
@@ -21,12 +21,16 @@ const Query = {
     return staff
   },
 
-  async stores(parent, args, { StoreDocument }, info) {
+  async stores(parent, args, { StoreDocument, request }, info) {
+    getUserId(request)
+
     const stores = await StoreDocument.find()
 
     return stores
   },
-  async store(parent, args, { StoreDocument }, info) {
+  async store(parent, args, { StoreDocument, request }, info) {
+    getUserId(request)
+
     const store = await StoreDocument.findById(args.id)
 
     if (!store) {
