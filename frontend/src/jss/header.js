@@ -7,6 +7,15 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: 'auto',
+  },
+  title: {
+    flexGrow: 1,
+  },
 }))
 
 export default useStyles
