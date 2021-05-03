@@ -11,7 +11,7 @@ const Home = () => {
     }
   })
 
-  return <div>Hello My MERN-G APP!</div>
+  return <div></div>
 }
 
 export default Home
