@@ -11,7 +11,7 @@ import muiTheme from './theme/muiTheme'
 const App = () => {
   return (
     <ThemeProvider theme={muiTheme}>
-      <Header />
+      {/* <Header /> */}
       <Router>
         <div className='app-container'>
           <main className='app-main'>

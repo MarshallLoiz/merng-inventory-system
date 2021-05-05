@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper'
 import RegisterForm from './RegisterForm'
 import useStyles from '../../jss/register'
 import cookieChecker from '../../utils/cookieChecker'
+import Header from '../../components/Header'
 
 const Register = () => {
   const classes = useStyles()
@@ -18,13 +19,16 @@ const Register = () => {
   })
 
   return (
-    <Grid container>
-      <div className={classes.registerRoot}>
-        <Paper elevation={3}>
-          <RegisterForm />
-        </Paper>
-      </div>
-    </Grid>
+    <>
+      <Header />
+      <Grid container>
+        <div className={classes.registerRoot}>
+          <Paper elevation={3}>
+            <RegisterForm />
+          </Paper>
+        </div>
+      </Grid>
+    </>
   )
 }
 
