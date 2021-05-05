@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
@@ -16,11 +17,32 @@ import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
 import SettingsIcon from '@material-ui/icons/Settings'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import { useMutation } from '@apollo/client'
+import { LOGOUT_STORE } from '../gql/Mutation'
 
 const Header = () => {
   const classes = useStyles()
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent)
   const [isOpenDrawer, setIsOpenDrawer] = useState(false)
+  const [anchorEl, setAnchorEl] = useState(null)
+  const history = useHistory()
+
+  const [dispatchLogout] = useMutation(LOGOUT_STORE)
+
+  const logoutHandler = async () => {
+    dispatchLogout().then(() => history.push('/login'))
+  }
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
 
   return (
     <div className={classes.root}>
@@ -42,11 +64,12 @@ const Header = () => {
               <Typography variant='h6' className={classes.title}>
                 React App
               </Typography>
-              <Avatar>VL</Avatar>
+              <Avatar aria-haspopup='true' onClick={handleClick}></Avatar>
             </>
           )}
         </Toolbar>
       </AppBar>
+
       <SwipeableDrawer
         anchor='left'
         open={isOpenDrawer}
@@ -87,6 +110,22 @@ const Header = () => {
           </List>
         </div>
       </SwipeableDrawer>
+      <Menu
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem
+          onClick={() => {
+            handleClose()
+            logoutHandler()
+          }}
+        >
+          <ExitToAppIcon />
+          Logout
+        </MenuItem>
+      </Menu>
     </div>
   )
 }

@@ -33,6 +33,12 @@ const Mutation = {
     }
   },
 
+  async logoutStore(parent, args, { request }, info) {
+    request.response.clearCookie('jwt')
+
+    return null
+  },
+
   async createStaff(parent, { data }, { StaffDocument, request }, info) {
     getUserId(request)
 

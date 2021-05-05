@@ -29,3 +29,8 @@ export const CREATE_STORE = gql`
     }
   }
 `
+export const LOGOUT_STORE = gql`
+  mutation {
+    logoutStore
+  }
+`

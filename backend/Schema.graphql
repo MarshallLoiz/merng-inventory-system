@@ -7,6 +7,7 @@ type Query {
 
 type Mutation {
   loginStore(data: LoginStoreData!): StoreLoginAuthPayload!
+  logoutStore: String
   loginStaff(data: LoginStaffData!): StaffLoginAuthPayload!
   createStaff(data: CreateStaffData!): Staff!
   createStore(data: CreateStoreData!): StorefAuthPayload!
