@@ -5,7 +5,13 @@ export const client = new ApolloClient({
   uri: 'http://localhost:4000',
   cache: new InMemoryCache(),
   credentials: 'include',
-  headers: {
-    authorization: Cookies.get('jwt') || '',
+  request: (operation) => {
+    const token = Cookies.get('jwt')
+
+    operation.setContext({
+      headers: {
+        Authorization: token ? `Bearer ${token}` : '',
+      },
+    })
   },
 })
