@@ -1,6 +1,14 @@
 const getUserId = require('../utils/getUserId')
 
 const Query = {
+  async currentStoreLogin(parent, args, { StoreDocument, request }, info) {
+    const currentStoreId = getUserId(request)
+
+    const store = await StoreDocument.findById(currentStoreId)
+
+    return store
+  },
+
   async staffs(parent, args, { StaffDocument, request }, info) {
     const id = getUserId(request)
 
@@ -28,6 +36,7 @@ const Query = {
 
     return stores
   },
+
   async store(parent, args, { StoreDocument, request }, info) {
     getUserId(request)
 

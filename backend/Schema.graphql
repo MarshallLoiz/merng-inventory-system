@@ -1,4 +1,5 @@
 type Query {
+  currentStoreLogin: Store!
   staffs: [Staff!]!
   staff(id: ID!): Staff!
   stores: [Store!]!
