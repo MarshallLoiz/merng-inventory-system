@@ -5,8 +5,6 @@ import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
-import useStyles from '../jss/header'
-import cookieChecker from '../utils/cookieChecker'
 import List from '@material-ui/core/List'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -20,11 +18,13 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import useStyles from '../jss/header'
+import cookieChecker from '../utils/cookieChecker'
 import { useMutation, useQuery } from '@apollo/client'
 import { LOGOUT_STORE } from '../gql/Mutation'
 import { GET_CURRENT_STORE_LOGIN_USER_FOR_HEADER } from '../gql/Query'
 
-const Header = () => {
+const Header = ({ headerState }) => {
   const classes = useStyles()
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent)
   const [isOpenDrawer, setIsOpenDrawer] = useState(false)
@@ -72,7 +72,7 @@ const Header = () => {
           {cookieChecker() && (
             <>
               <Typography variant='h6' className={classes.title}>
-                React App
+                {headerState}
               </Typography>
               <Avatar aria-haspopup='true' onClick={handleAvatarClick}>
                 {storeName.charAt(0)}
