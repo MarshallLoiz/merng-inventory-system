@@ -4,14 +4,11 @@ import Login from './screens/Login/index'
 import Home from './screens/Home'
 import Register from './screens/Register'
 
-import Header from './components/Header'
-
 import muiTheme from './theme/muiTheme'
 
 const App = () => {
   return (
     <ThemeProvider theme={muiTheme}>
-      {/* <Header /> */}
       <Router>
         <div className='app-container'>
           <main className='app-main'>
