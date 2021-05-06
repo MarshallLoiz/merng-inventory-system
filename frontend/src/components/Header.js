@@ -20,28 +20,38 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
-import { useMutation } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import { LOGOUT_STORE } from '../gql/Mutation'
+import { GET_CURRENT_STORE_LOGIN_USER_FOR_HEADER } from '../gql/Query'
 
 const Header = () => {
   const classes = useStyles()
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent)
   const [isOpenDrawer, setIsOpenDrawer] = useState(false)
-  const [anchorEl, setAnchorEl] = useState(null)
+  const [dropdownAnchor, setDropdownAnchor] = useState(null)
   const history = useHistory()
 
+  const { data } = useQuery(GET_CURRENT_STORE_LOGIN_USER_FOR_HEADER, {
+    fetchPolicy: 'network-only',
+    skip:
+      history.location.pathname === '/login' ||
+      history.location.pathname === '/register',
+  })
+
   const [dispatchLogout] = useMutation(LOGOUT_STORE)
+
+  const storeName = data ? data.currentStoreLogin.storeName : ''
 
   const logoutHandler = async () => {
     dispatchLogout().then(() => history.push('/login'))
   }
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget)
+  const handleAvatarClick = (event) => {
+    setDropdownAnchor(event.currentTarget)
   }
 
-  const handleClose = () => {
-    setAnchorEl(null)
+  const handleDropdownCloseClick = () => {
+    setDropdownAnchor(null)
   }
 
   return (
@@ -64,7 +74,9 @@ const Header = () => {
               <Typography variant='h6' className={classes.title}>
                 React App
               </Typography>
-              <Avatar aria-haspopup='true' onClick={handleClick}></Avatar>
+              <Avatar aria-haspopup='true' onClick={handleAvatarClick}>
+                {storeName.charAt(0)}
+              </Avatar>
             </>
           )}
         </Toolbar>
@@ -111,14 +123,14 @@ const Header = () => {
         </div>
       </SwipeableDrawer>
       <Menu
-        anchorEl={anchorEl}
+        anchorEl={dropdownAnchor}
         keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
+        open={Boolean(dropdownAnchor)}
+        onClose={handleDropdownCloseClick}
       >
         <MenuItem
           onClick={() => {
-            handleClose()
+            handleDropdownCloseClick()
             logoutHandler()
           }}
         >
