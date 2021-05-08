@@ -28,6 +28,7 @@ type Staff {
   dateOfJoin: String!
   dateOfLeft: String
   commisionPercentage: Int
+  jobTitle: String!
   otherDetails: String
   address: Address!
 }
