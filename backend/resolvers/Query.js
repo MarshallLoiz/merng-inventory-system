@@ -10,9 +10,9 @@ const Query = {
   },
 
   async staffs(parent, args, { StaffDocument, request }, info) {
-    const id = getUserId(request)
+    const storeId = getUserId(request)
 
-    const staffs = await StaffDocument.find({ storeId: id })
+    const staffs = await StaffDocument.find({ storeId })
 
     return staffs
   },
