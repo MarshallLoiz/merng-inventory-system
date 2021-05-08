@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import Skeleton from '@material-ui/lab/Skeleton'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
@@ -31,7 +32,7 @@ const Header = ({ headerState }) => {
   const [dropdownAnchor, setDropdownAnchor] = useState(null)
   const history = useHistory()
 
-  const { data } = useQuery(GET_CURRENT_STORE_LOGIN_USER_FOR_HEADER, {
+  const { loading, data } = useQuery(GET_CURRENT_STORE_LOGIN_USER_FOR_HEADER, {
     fetchPolicy: 'network-only',
     skip:
       history.location.pathname === '/login' ||
@@ -74,9 +75,17 @@ const Header = ({ headerState }) => {
               <Typography variant='h6' className={classes.title}>
                 {headerState}
               </Typography>
-              <Avatar aria-haspopup='true' onClick={handleAvatarClick}>
-                {storeName.charAt(0)}
-              </Avatar>
+              {loading ? (
+                <Skeleton variant='circle' width={40} height={40} />
+              ) : (
+                <Avatar
+                  aria-haspopup='true'
+                  onClick={handleAvatarClick}
+                  animation='wave'
+                >
+                  {storeName.charAt(0)}
+                </Avatar>
+              )}
             </>
           )}
         </Toolbar>
