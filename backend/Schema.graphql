@@ -30,7 +30,7 @@ type Staff {
   commisionPercentage: Int
   jobTitle: String!
   otherDetails: String
-  address: Address!
+  address: String!
 }
 
 type Store {
@@ -75,16 +75,6 @@ type StorefAuthPayload {
   store: Store!
 }
 
-type Address {
-  line1: String!
-  line2: String
-  line3: String
-  city: String!
-  zipOrPasscode: Int!
-  stateProvinceCountry: String!
-  country: String!
-  otherAddressDetails: String
-}
 
 enum Gender {
   male
@@ -118,7 +108,7 @@ input CreateStaffData {
   jobDescription: String!
   commisionPercentage: Int
   otherDetails: String
-  address: CreateStaffAddressData!
+  address: String!
 }
 
 input UpdateStaffData {
@@ -138,23 +128,12 @@ input UpdateStaffData {
   jobDescription: String
   commisionPercentage: Int
   otherDetails: String
-  address: CreateStaffAddressData
+  address: String!
 }
 
 input DeleteStaffData {
   id: ID!
   storeId: ID!
-}
-
-input CreateStaffAddressData {
-  line1: String!
-  line2: String
-  line3: String
-  city: String!
-  zipOrPasscode: Int!
-  stateProvinceCountry: String!
-  country: String!
-  otherAddressDetails: String
 }
 
 input CreateStoreData {
