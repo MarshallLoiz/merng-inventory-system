@@ -7,6 +7,13 @@ export const GET_CURRENT_STORE_LOGIN_USER_FOR_HEADER = gql`
     }
   }
 `
+export const GET_CURRENT_STORE_LOGIN_USER_ID = gql`
+  query GetCurrentStoreLoginUser {
+    currentStoreLogin {
+      id
+    }
+  }
+`
 
 export const GET_STORE_STAFFS = gql`
   query GetStoreStaffs {
