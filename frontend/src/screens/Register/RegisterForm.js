@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
+import { Formik, Form, Field } from 'formik'
+import validator from 'validator'
+import { TextField } from 'formik-material-ui'
 import { Link, useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import Grid from '@material-ui/core/Grid'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Typography from '@material-ui/core/Typography'
-import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import IconButton from '@material-ui/core/IconButton'
 import Alert from '@material-ui/lab/Alert'
@@ -25,25 +27,9 @@ const RegisterForm = () => {
     { loading: registerLoading, error: registerError },
   ] = useMutation(CREATE_STORE)
 
-  const [storeName, setStoreName] = useState('')
-  const [email, setEmail] = useState('')
-  const [areaCode, setAreaCode] = useState('')
-  const [storeAddress, setStoreAddress] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [otherDetails, setOtherDetails] = useState('')
   const [error, setError] = useState(null)
   const [isShowPassword, setIsShowPassword] = useState(false)
   const [isShowConfirmPassword, setIsConfirmShowPassword] = useState(false)
-
-  const [storeNameFieldError, setStoreNameFieldError] = useState(false)
-  const [emailFieldError, setEmailFieldError] = useState(false)
-  const [areaCodeFieldError, setAreaCodeFieldError] = useState(false)
-  const [storeAddressFieldError, setStoreAddressFieldError] = useState(false)
-  const [passwordFieldError, setPasswordFieldError] = useState(false)
-  const [confirmPasswordFieldError, setConfirmPasswordFieldError] = useState(
-    false
-  )
 
   const handleClickShowPassword = () => {
     setIsShowPassword(!isShowPassword)
@@ -53,67 +39,18 @@ const RegisterForm = () => {
     setIsConfirmShowPassword(!isShowConfirmPassword)
   }
 
-  const submitHandler = async (e) => {
-    e.preventDefault()
-
-    if (!storeName.length > 0) {
-      setStoreNameFieldError(true)
-    } else {
-      setStoreNameFieldError(false)
-    }
-
-    if (!email.length > 0) {
-      setEmailFieldError(true)
-    } else {
-      setEmailFieldError(false)
-    }
-
-    if (!areaCode.length > 0) {
-      setAreaCodeFieldError(true)
-    } else {
-      setAreaCodeFieldError(false)
-    }
-
-    if (!storeAddress.length > 0) {
-      setStoreAddressFieldError(true)
-    } else {
-      setStoreAddressFieldError(false)
-    }
-
-    if (!password.length > 0) {
-      setPasswordFieldError(true)
-    } else {
-      setPasswordFieldError(false)
-    }
-
-    if (!confirmPassword.length > 0) {
-      setConfirmPasswordFieldError(true)
-    } else {
-      setConfirmPasswordFieldError(false)
-    }
-
+  const submitHandler = async (values) => {
     try {
-      if (
-        !storeName.length > 0 ||
-        !email.length > 0 ||
-        !areaCode.length > 0 ||
-        !storeAddress.length > 0 ||
-        !password.length > 0 ||
-        !confirmPassword.length > 0
-      ) {
-        return
-      }
-
       await dispatchCreateStore({
         variables: {
           data: {
-            storeName,
-            email,
-            areaCode: Number(areaCode),
-            storeAddress,
-            password,
-            confirmPassword,
-            otherDetails,
+            storeName: values.storeName,
+            email: values.email,
+            areaCode: Number(values.areaCode),
+            storeAddress: values.storeAddress,
+            password: values.password,
+            confirmPassword: values.confirmPassword,
+            otherDetails: values.otherDetails,
           },
         },
       })
@@ -131,180 +68,207 @@ const RegisterForm = () => {
           {error}
         </Alert>
       )}
-      <form onSubmit={submitHandler}>
-        <div className={classes.registerFormContainer}>
-          <Grid container spacing={1}>
-            <Grid item xs={12} sm={12}>
-              <FormControl fullWidth margin='dense' error>
-                <TextField
-                  FormHelperTextProps={{
-                    className: classes.errorText,
-                  }}
-                  error={storeNameFieldError}
-                  helperText={
-                    storeNameFieldError ? 'Store name is required' : ''
-                  }
-                  label='Store Name'
-                  type='text'
-                  variant='outlined'
-                  value={storeName}
-                  onChange={(e) => setStoreName(e.target.value)}
-                />
-              </FormControl>
-            </Grid>
+      <Formik
+        initialValues={{
+          storeName: '',
+          email: '',
+          areaCode: '',
+          storeAddress: '',
+          password: '',
+          confirmPassword: '',
+          otherDetails: '',
+        }}
+        onSubmit={submitHandler}
+        validate={(values) => {
+          const errors = {}
+          if (!values.email) {
+            errors.email = 'Email is required'
+          } else if (!validator.isEmail(values.email)) {
+            errors.email = 'Please provide a valid email'
+          }
 
-            <Grid item xs={6} sm={6}>
-              <FormControl fullWidth margin='dense'>
-                <TextField
-                  FormHelperTextProps={{
-                    className: classes.errorText,
-                  }}
-                  error={emailFieldError}
-                  helperText={emailFieldError ? 'Email is required' : ''}
-                  label='Email'
-                  type='text'
-                  variant='outlined'
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </FormControl>
-            </Grid>
+          if (!values.storeName) {
+            errors.storeName = 'Store name is required'
+          }
 
-            <Grid item xs={6} sm={6}>
-              <FormControl fullWidth margin='dense'>
-                <TextField
-                  FormHelperTextProps={{
-                    className: classes.errorText,
-                  }}
-                  error={areaCodeFieldError}
-                  helperText={areaCodeFieldError ? 'Area code is required' : ''}
-                  label='Area Code'
-                  type='number'
-                  variant='outlined'
-                  value={areaCode}
-                  onChange={(e) => setAreaCode(e.target.value)}
-                />
-              </FormControl>
-            </Grid>
+          if (!values.areaCode) {
+            errors.areaCode = 'Area code is required'
+          }
 
-            <Grid item xs={12} sm={12}>
-              <FormControl fullWidth margin='dense'>
-                <TextField
-                  FormHelperTextProps={{
-                    className: classes.errorText,
-                  }}
-                  error={storeAddressFieldError}
-                  helperText={
-                    storeAddressFieldError ? 'Store address is required' : ''
-                  }
-                  label='Store Address'
-                  type='text'
-                  variant='outlined'
-                  value={storeAddress}
-                  onChange={(e) => setStoreAddress(e.target.value)}
-                />
-              </FormControl>
-            </Grid>
+          if (!values.storeAddress) {
+            errors.storeAddress = 'Store address is required'
+          }
 
-            <Grid item xs={12} sm={12}>
-              <FormControl fullWidth margin='dense'>
-                <TextField
-                  FormHelperTextProps={{
-                    className: classes.errorText,
-                  }}
-                  error={passwordFieldError}
-                  helperText={passwordFieldError ? 'Password is required' : ''}
-                  label='Password'
-                  type={isShowPassword ? 'text' : 'password'}
-                  variant='outlined'
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position='end'>
-                        <IconButton onClick={handleClickShowPassword}>
-                          {isShowPassword ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </FormControl>
-            </Grid>
+          if (!values.password) {
+            errors.password = 'Password is required'
+          }
 
-            <Grid item xs={12} sm={12}>
-              <FormControl fullWidth margin='dense'>
-                <TextField
-                  FormHelperTextProps={{
-                    className: classes.errorText,
-                  }}
-                  error={confirmPasswordFieldError}
-                  helperText={
-                    confirmPasswordFieldError
-                      ? 'Password confirm is required'
-                      : ''
-                  }
-                  label='Confirm Password'
-                  type={isShowConfirmPassword ? 'text' : 'password'}
-                  variant='outlined'
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position='end'>
-                        <IconButton onClick={handleClickShowConfirmPassword}>
-                          {isShowConfirmPassword ? (
-                            <Visibility />
-                          ) : (
-                            <VisibilityOff />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </FormControl>
-            </Grid>
+          if (!values.confirmPassword) {
+            errors.confirmPassword = 'Confirm password is required'
+          }
+          return errors
+        }}
+      >
+        {({ submitForm }) => (
+          <Form>
+            <div className={classes.registerFormContainer}>
+              <Grid container spacing={1}>
+                <Grid item xs={12} sm={12}>
+                  <FormControl fullWidth margin='dense' error>
+                    <Field
+                      component={TextField}
+                      FormHelperTextProps={{
+                        className: classes.errorText,
+                      }}
+                      label='Store Name'
+                      type='text'
+                      variant='outlined'
+                      name='storeName'
+                    />
+                  </FormControl>
+                </Grid>
 
-            <Grid item xs={12} sm={12}>
-              <FormControl fullWidth margin='dense'>
-                <TextField
-                  label='Other details'
-                  variant='outlined'
-                  multiline
-                  rows={2}
-                  rowsMax={4}
-                  value={otherDetails}
-                  onChange={(e) => setOtherDetails(e.target.value)}
-                />
-              </FormControl>
-            </Grid>
+                <Grid item xs={6} sm={6}>
+                  <FormControl fullWidth margin='dense'>
+                    <Field
+                      component={TextField}
+                      FormHelperTextProps={{
+                        className: classes.errorText,
+                      }}
+                      label='Email'
+                      type='text'
+                      variant='outlined'
+                      name='email'
+                    />
+                  </FormControl>
+                </Grid>
 
-            <Button
-              type='submit'
-              variant='contained'
-              fullWidth
-              className={classes.registerButton}
-              disableElevation
-              disableRipple
-            >
-              Create store
-              {registerLoading && (
-                <CircularProgress
-                  size={20}
-                  className={classes.circularProgressRegister}
-                />
-              )}
-            </Button>
-          </Grid>
-        </div>
-        <Typography component='span'>Already have account?</Typography>
-        <Link to='/login' className={classes.loginLink}>
-          <Typography component='span' className={classes.loginLink}>
-            Login Here!
-          </Typography>
-        </Link>
-      </form>
+                <Grid item xs={6} sm={6}>
+                  <FormControl fullWidth margin='dense'>
+                    <Field
+                      component={TextField}
+                      FormHelperTextProps={{
+                        className: classes.errorText,
+                      }}
+                      label='Area Code'
+                      type='number'
+                      variant='outlined'
+                      name='areaCode'
+                    />
+                  </FormControl>
+                </Grid>
+
+                <Grid item xs={12} sm={12}>
+                  <FormControl fullWidth margin='dense'>
+                    <Field
+                      component={TextField}
+                      FormHelperTextProps={{
+                        className: classes.errorText,
+                      }}
+                      label='Store Address'
+                      type='text'
+                      variant='outlined'
+                      name='storeAddress'
+                    />
+                  </FormControl>
+                </Grid>
+
+                <Grid item xs={12} sm={12}>
+                  <FormControl fullWidth margin='dense'>
+                    <Field
+                      component={TextField}
+                      FormHelperTextProps={{
+                        className: classes.errorText,
+                      }}
+                      name='password'
+                      label='Password'
+                      type={isShowPassword ? 'text' : 'password'}
+                      variant='outlined'
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position='end'>
+                            <IconButton onClick={handleClickShowPassword}>
+                              {isShowPassword ? (
+                                <Visibility />
+                              ) : (
+                                <VisibilityOff />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </FormControl>
+                </Grid>
+
+                <Grid item xs={12} sm={12}>
+                  <FormControl fullWidth margin='dense'>
+                    <Field
+                      component={TextField}
+                      label='Confirm Password'
+                      type={isShowConfirmPassword ? 'text' : 'password'}
+                      variant='outlined'
+                      name='confirmPassword'
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position='end'>
+                            <IconButton
+                              onClick={handleClickShowConfirmPassword}
+                            >
+                              {isShowConfirmPassword ? (
+                                <Visibility />
+                              ) : (
+                                <VisibilityOff />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </FormControl>
+                </Grid>
+
+                <Grid item xs={12} sm={12}>
+                  <FormControl fullWidth margin='dense'>
+                    <Field
+                      component={TextField}
+                      label='Other details'
+                      variant='outlined'
+                      multiline
+                      rows={2}
+                      rowsMax={4}
+                      name='otherDetails'
+                    />
+                  </FormControl>
+                </Grid>
+
+                <Button
+                  onClick={submitForm}
+                  variant='contained'
+                  fullWidth
+                  className={classes.registerButton}
+                  disableElevation
+                  disableRipple
+                >
+                  Create store
+                  {registerLoading && (
+                    <CircularProgress
+                      size={20}
+                      className={classes.circularProgressRegister}
+                    />
+                  )}
+                </Button>
+              </Grid>
+            </div>
+          </Form>
+        )}
+      </Formik>
+      <Typography component='span'>Already have account?</Typography>
+      <Link to='/login' className={classes.loginLink}>
+        <Typography component='span' className={classes.loginLink}>
+          Login Here!
+        </Typography>
+      </Link>
     </div>
   )
 }
