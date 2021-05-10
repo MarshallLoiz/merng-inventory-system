@@ -15,6 +15,12 @@ export const LOGIN_STORE = gql`
   }
 `
 
+export const LOGOUT_STORE = gql`
+  mutation {
+    logoutStore
+  }
+`
+
 export const CREATE_STORE = gql`
   mutation CreateStore($data: CreateStoreData!) {
     createStore(data: $data) {
@@ -29,8 +35,18 @@ export const CREATE_STORE = gql`
     }
   }
 `
-export const LOGOUT_STORE = gql`
-  mutation {
-    logoutStore
+export const CREATE_STAFF = gql`
+  mutation CreateStaff($data: CreateStaffData!) {
+    createStaff(data: $data) {
+      id
+      firstName
+      lastName
+      gender
+      officePhone
+      email
+      dateOfJoin
+      dateOfBirth
+      address
+    }
   }
 `

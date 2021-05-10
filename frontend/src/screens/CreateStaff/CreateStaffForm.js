@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom'
 import validator from 'validator'
 import { Formik, Form, Field } from 'formik'
 import { TextField } from 'formik-material-ui'
+import Alert from '@material-ui/lab/Alert'
+import Snackbar from '@material-ui/core/Snackbar'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
@@ -10,21 +12,87 @@ import FormControl from '@material-ui/core/FormControl'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import MenuItem from '@material-ui/core/MenuItem'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import DateFnsUtils from '@date-io/date-fns'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import { useMutation, useQuery } from '@apollo/client'
 import { DatePicker } from 'formik-material-ui-pickers'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
+import { CREATE_STAFF } from '../../gql/Mutation'
+import { GET_CURRENT_STORE_LOGIN_USER_ID } from '../../gql/Query'
 import useStyles from '../../jss/createStaff'
 
 const CreateStaffForm = () => {
   const classes = useStyles()
-
   const history = useHistory()
+
+  const [errorState, setErrorState] = useState('')
+  const [snackBarOpen, setSnackBarOpen] = useState(false)
+  const [isShowPassword, setIsShowPassword] = useState(false)
+  const [isShowConfirmPassword, setIsConfirmShowPassword] = useState(false)
 
   const [dateOfBirth, handeDateOfBirth] = useState(new Date())
   const [dateOfJoin, handleDateOfJoin] = useState(new Date())
 
+  const handleClickShowPassword = () => {
+    setIsShowPassword(!isShowPassword)
+  }
+
+  const handleClickShowConfirmPassword = () => {
+    setIsConfirmShowPassword(!isShowConfirmPassword)
+  }
+
+  const [dispatchCreateStaff, { error: errorCreatingStaff }] = useMutation(
+    CREATE_STAFF
+  )
+
+  const { data, loading } = useQuery(GET_CURRENT_STORE_LOGIN_USER_ID)
+
+  const currentStoreLoginId = data ? data.currentStoreLogin.id : ''
+
+  const handleSubmit = async (values, { resetForm }) => {
+    try {
+      await dispatchCreateStaff({
+        variables: {
+          data: {
+            storeId: currentStoreLoginId,
+            firstName: values.firstName,
+            lastName: values.lastName,
+            email: values.email,
+            gender: values.gender,
+            officePhone: Number(values.phoneNumber),
+            jobTitle: values.jobTitle,
+            jobDescription: values.jobDescription,
+            dateOfBirth: dateOfBirth,
+            dateOfJoin: dateOfJoin,
+            password: values.password,
+            confirmPassword: values.confirmPassword,
+            address: values.address,
+          },
+        },
+      })
+      setSnackBarOpen(true)
+      resetForm({})
+    } catch (err) {
+      setErrorState(err.message)
+    }
+  }
+
   return (
     <div className={classes.createStaff}>
+      {errorCreatingStaff && <Alert severity='error'>{errorState}</Alert>}
+
+      <Snackbar
+        open={snackBarOpen}
+        autoHideDuration={2000}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert severity='success' variant='filled'>
+          Staff successfully added!
+        </Alert>
+      </Snackbar>
+
       <IconButton
         className={classes.craeteStaffBack}
         onClick={() => history.push('/')}
@@ -34,7 +102,7 @@ const CreateStaffForm = () => {
       </IconButton>
       <Typography variant='h5'>Create new Staff</Typography>
       <Formik
-        onSubmit={(values) => console.log(values)}
+        onSubmit={handleSubmit}
         initialValues={{
           firstName: '',
           lastName: '',
@@ -269,10 +337,23 @@ const CreateStaffForm = () => {
                         component={TextField}
                         label='Password'
                         variant='outlined'
-                        type='password'
+                        type={isShowPassword ? 'text' : 'password'}
                         name='password'
                         FormHelperTextProps={{
                           className: classes.errorText,
+                        }}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position='end'>
+                              <IconButton onClick={handleClickShowPassword}>
+                                {isShowPassword ? (
+                                  <Visibility />
+                                ) : (
+                                  <VisibilityOff />
+                                )}
+                              </IconButton>
+                            </InputAdornment>
+                          ),
                         }}
                       />
                     </FormControl>
@@ -284,10 +365,25 @@ const CreateStaffForm = () => {
                         component={TextField}
                         label='Confirm password'
                         variant='outlined'
-                        type='password'
+                        type={isShowConfirmPassword ? 'text' : 'password'}
                         name='confirmPassword'
                         FormHelperTextProps={{
                           className: classes.errorText,
+                        }}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position='end'>
+                              <IconButton
+                                onClick={handleClickShowConfirmPassword}
+                              >
+                                {isShowPassword ? (
+                                  <Visibility />
+                                ) : (
+                                  <VisibilityOff />
+                                )}
+                              </IconButton>
+                            </InputAdornment>
+                          ),
                         }}
                       />
                     </FormControl>
@@ -312,6 +408,7 @@ const CreateStaffForm = () => {
 
                   <Grid item>
                     <Button
+                      disabled={loading}
                       className={classes.createStaffButton}
                       onClick={submitForm}
                     >
