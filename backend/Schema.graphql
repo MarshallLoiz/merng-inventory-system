@@ -35,6 +35,7 @@ type Staff {
 
 type Store {
   id: ID!
+  email: String!
   areaCode: Int!
   storeName: String!
   storeAddress: String!
