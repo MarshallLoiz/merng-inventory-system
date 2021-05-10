@@ -47,7 +47,7 @@ const CreateStaffForm = () => {
     CREATE_STAFF
   )
 
-  const { data, loading } = useQuery(GET_CURRENT_STORE_LOGIN_USER_ID)
+  const { data } = useQuery(GET_CURRENT_STORE_LOGIN_USER_ID)
 
   const currentStoreLoginId = data ? data.currentStoreLogin.id : ''
 
@@ -408,7 +408,6 @@ const CreateStaffForm = () => {
 
                   <Grid item>
                     <Button
-                      disabled={loading}
                       className={classes.createStaffButton}
                       onClick={submitForm}
                     >
