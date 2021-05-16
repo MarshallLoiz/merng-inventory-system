@@ -34,9 +34,7 @@ const Header = ({ headerState }) => {
 
   const { loading, data } = useQuery(GET_CURRENT_STORE_LOGIN_USER_FOR_HEADER, {
     fetchPolicy: 'network-only',
-    skip:
-      history.location.pathname === '/login' ||
-      history.location.pathname === '/register',
+    skip: !cookieChecker(),
   })
 
   const [dispatchLogout] = useMutation(LOGOUT_STORE)

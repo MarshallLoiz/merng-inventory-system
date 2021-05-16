@@ -21,6 +21,7 @@ import { DatePicker } from 'formik-material-ui-pickers'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { CREATE_STAFF } from '../../gql/Mutation'
 import { GET_CURRENT_STORE_LOGIN_USER_ID } from '../../gql/Query'
+import PhoneNumberFormat from './PhoneNumberFormat'
 import useStyles from '../../jss/createStaff'
 
 const CreateStaffForm = () => {
@@ -43,9 +44,8 @@ const CreateStaffForm = () => {
     setIsConfirmShowPassword(!isShowConfirmPassword)
   }
 
-  const [dispatchCreateStaff, { error: errorCreatingStaff }] = useMutation(
-    CREATE_STAFF
-  )
+  const [dispatchCreateStaff, { error: errorCreatingStaff }] =
+    useMutation(CREATE_STAFF)
 
   const { data } = useQuery(GET_CURRENT_STORE_LOGIN_USER_ID)
 
@@ -61,7 +61,7 @@ const CreateStaffForm = () => {
             lastName: values.lastName,
             email: values.email,
             gender: values.gender,
-            officePhone: Number(values.phoneNumber),
+            officePhone: `+63 ${Number(values.phoneNumber)}`,
             jobTitle: values.jobTitle,
             jobDescription: values.jobDescription,
             dateOfBirth: dateOfBirth,
@@ -117,6 +117,8 @@ const CreateStaffForm = () => {
           confirmPassword: '',
           address: '',
         }}
+        validateOnChange={false}
+        validateOnBlur={false}
         validate={(values) => {
           const errors = {}
           if (!values.email) {
@@ -134,7 +136,7 @@ const CreateStaffForm = () => {
           }
 
           if (!values.gender) {
-            errors.gender = 'Gender name is required'
+            errors.gender = 'Gender is required'
           }
 
           if (!values.phoneNumber) {
@@ -217,7 +219,7 @@ const CreateStaffForm = () => {
                       </FormControl>
                     </Grid>
 
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={12} md={6}>
                       <FormControl variant='outlined' fullWidth margin='dense'>
                         <Field
                           label='Gender'
@@ -229,20 +231,27 @@ const CreateStaffForm = () => {
                             className: classes.errorText,
                           }}
                         >
-                          <MenuItem value='male'>Male</MenuItem>
-                          <MenuItem value='female'>Female</MenuItem>
+                          <MenuItem value='Male'>Male</MenuItem>
+                          <MenuItem value='Female'>Female</MenuItem>
                         </Field>
                       </FormControl>
                     </Grid>
 
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={12} md={6}>
                       <FormControl fullWidth margin='dense'>
                         <Field
                           component={TextField}
                           label='Phone number'
                           variant='outlined'
-                          type='number'
                           name='phoneNumber'
+                          InputProps={{
+                            inputComponent: PhoneNumberFormat,
+                            startAdornment: (
+                              <InputAdornment position='start'>
+                                +63
+                              </InputAdornment>
+                            ),
+                          }}
                           FormHelperTextProps={{
                             className: classes.errorText,
                           }}

@@ -24,6 +24,10 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.button.backGroundColorhover,
     },
   },
+  dashboardCircullarProgress: {
+    display: 'block',
+    margin: 'auto',
+  },
 }))
 
 export default useStyles

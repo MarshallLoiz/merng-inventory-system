@@ -15,6 +15,7 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import Button from '@material-ui/core/Button'
 import { CREATE_STORE } from '../../gql/Mutation'
+import AreaCodeFormat from './AreaCodeFormat'
 import useStyles from '../../jss/register'
 
 const RegisterForm = () => {
@@ -78,6 +79,8 @@ const RegisterForm = () => {
           confirmPassword: '',
           otherDetails: '',
         }}
+        validateOnChange={false}
+        validateOnBlur={false}
         onSubmit={submitHandler}
         validate={(values) => {
           const errors = {}
@@ -151,9 +154,11 @@ const RegisterForm = () => {
                         className: classes.errorText,
                       }}
                       label='Area Code'
-                      type='number'
                       variant='outlined'
                       name='areaCode'
+                      InputProps={{
+                        inputComponent: AreaCodeFormat,
+                      }}
                     />
                   </FormControl>
                 </Grid>
@@ -205,6 +210,9 @@ const RegisterForm = () => {
                   <FormControl fullWidth margin='dense'>
                     <Field
                       component={TextField}
+                      FormHelperTextProps={{
+                        className: classes.errorText,
+                      }}
                       label='Confirm Password'
                       type={isShowConfirmPassword ? 'text' : 'password'}
                       variant='outlined'

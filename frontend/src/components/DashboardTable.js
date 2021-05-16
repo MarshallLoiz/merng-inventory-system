@@ -32,7 +32,10 @@ const DashboardTable = () => {
   return (
     <>
       {loading ? (
-        <CircularProgress />
+        <CircularProgress
+          size={100}
+          className={classes.dashboardCircullarProgress}
+        />
       ) : (
         <>
           <div className={classes.buttonWrapper}>
