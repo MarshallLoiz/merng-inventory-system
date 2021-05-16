@@ -101,7 +101,7 @@ input CreateStaffData {
   firstName: String!
   lastName: String!
   gender: Gender!
-  officePhone: Int!
+  officePhone: Float!
   dateOfJoin: String!
   dateOfBirth: String!
   dateOfLeft: String

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+// import NumberFormat from 'react-number-format'
 import validator from 'validator'
 import { Formik, Form, Field } from 'formik'
 import { TextField } from 'formik-material-ui'
@@ -61,7 +62,7 @@ const CreateStaffForm = () => {
             lastName: values.lastName,
             email: values.email,
             gender: values.gender,
-            officePhone: `+63 ${Number(values.phoneNumber)}`,
+            officePhone: Number(values.phoneNumber),
             jobTitle: values.jobTitle,
             jobDescription: values.jobDescription,
             dateOfBirth: dateOfBirth,
@@ -117,7 +118,6 @@ const CreateStaffForm = () => {
           confirmPassword: '',
           address: '',
         }}
-        validateOnChange={false}
         validateOnBlur={false}
         validate={(values) => {
           const errors = {}
