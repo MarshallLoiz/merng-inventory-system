@@ -1,3 +1,6 @@
+
+scalar BigInt
+
 type Query {
   currentStoreLogin: Store!
   staffs: [Staff!]!
@@ -22,7 +25,7 @@ type Staff {
   firstName: String!
   lastName: String!
   gender: Gender!
-  officePhone: Int!
+  officePhone: BigInt!
   email: String!
   dateOfBirth: String!
   dateOfJoin: String!
@@ -101,13 +104,12 @@ input CreateStaffData {
   firstName: String!
   lastName: String!
   gender: Gender!
-  officePhone: Float!
+  officePhone: BigInt!
   dateOfJoin: String!
   dateOfBirth: String!
   dateOfLeft: String
   jobTitle: String!
   jobDescription: String!
-  commisionPercentage: Int
   otherDetails: String
   address: String!
 }

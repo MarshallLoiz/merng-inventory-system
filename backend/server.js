@@ -1,6 +1,7 @@
 const { GraphQLServer } = require('graphql-yoga')
 const Query = require('./resolvers/Query')
 const Mutation = require('./resolvers/Mutation')
+const BigInt = require('graphql-bigint')
 
 const StaffDocument = require('./models/Staff')
 const StoreDocument = require('./models/Store')
@@ -29,6 +30,7 @@ const server = new GraphQLServer({
     Store,
     Sales,
     Product,
+    BigInt,
   },
   context(request) {
     return {
