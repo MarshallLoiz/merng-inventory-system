@@ -33,7 +33,6 @@ const Header = ({ headerState }) => {
   const history = useHistory()
 
   const { loading, data } = useQuery(GET_CURRENT_STORE_LOGIN_USER_FOR_HEADER, {
-    fetchPolicy: 'network-only',
     skip: !cookieChecker(),
   })
 
