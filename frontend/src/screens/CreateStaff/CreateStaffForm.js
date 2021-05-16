@@ -118,6 +118,7 @@ const CreateStaffForm = () => {
           confirmPassword: '',
           address: '',
         }}
+        validateOnChange={false}
         validateOnBlur={false}
         validate={(values) => {
           const errors = {}
