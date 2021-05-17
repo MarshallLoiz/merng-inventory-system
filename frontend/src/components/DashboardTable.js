@@ -23,9 +23,7 @@ const DashboardTable = () => {
     history.push('/create-staff')
   }
 
-  const { loading, data } = useQuery(GET_STORE_STAFFS, {
-    fetchPolicy: 'network-only',
-  })
+  const { loading, data } = useQuery(GET_STORE_STAFFS)
 
   const staffs = data ? data.staffs : []
 
