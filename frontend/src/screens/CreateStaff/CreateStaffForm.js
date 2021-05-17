@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-// import NumberFormat from 'react-number-format'
 import validator from 'validator'
 import { Formik, Form, Field } from 'formik'
 import { TextField } from 'formik-material-ui'
@@ -45,8 +44,20 @@ const CreateStaffForm = () => {
     setIsConfirmShowPassword(!isShowConfirmPassword)
   }
 
-  const [dispatchCreateStaff, { error: errorCreatingStaff }] =
-    useMutation(CREATE_STAFF)
+  const [dispatchCreateStaff, { error: errorCreatingStaff }] = useMutation(
+    CREATE_STAFF,
+    {
+      update(cache, { data: newStaff }) {
+        cache.modify({
+          fields: {
+            staffs(existingStaffs = []) {
+              return [...existingStaffs, newStaff]
+            },
+          },
+        })
+      },
+    }
+  )
 
   const { data } = useQuery(GET_CURRENT_STORE_LOGIN_USER_ID)
 
@@ -171,7 +182,7 @@ const CreateStaffForm = () => {
           return errors
         }}
       >
-        {({ submitForm }) => (
+        {({ submitForm, isSubmitting }) => (
           <Form>
             <div className={classes.createStaffFormContainer}>
               <Grid container spacing={4}>
@@ -418,6 +429,7 @@ const CreateStaffForm = () => {
 
                   <Grid item>
                     <Button
+                      disabled={isSubmitting}
                       className={classes.createStaffButton}
                       onClick={submitForm}
                     >
