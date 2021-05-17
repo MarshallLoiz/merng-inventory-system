@@ -36,12 +36,14 @@ const Header = ({ headerState }) => {
     skip: !cookieChecker(),
   })
 
-  const [dispatchLogout] = useMutation(LOGOUT_STORE)
+  const [dispatchLogout, { client }] = useMutation(LOGOUT_STORE)
 
   const storeName = data ? data.currentStoreLogin.storeName : ''
 
   const logoutHandler = async () => {
-    dispatchLogout().then(() => history.push('/login'))
+    dispatchLogout()
+      .then(client.clearStore())
+      .then(() => history.push('/login'))
   }
 
   const handleAvatarClick = (event) => {
