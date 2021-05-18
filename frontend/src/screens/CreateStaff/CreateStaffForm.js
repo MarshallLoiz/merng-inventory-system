@@ -20,7 +20,7 @@ import { useMutation, useQuery } from '@apollo/client'
 import { DatePicker } from 'formik-material-ui-pickers'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { CREATE_STAFF } from '../../gql/Mutation'
-import { GET_CURRENT_STORE_LOGIN_USER_ID } from '../../gql/Query'
+import { GET_CURRENT_STORE_LOGIN_USER } from '../../gql/Query'
 import PhoneNumberFormat from './PhoneNumberFormat'
 import useStyles from '../../jss/createStaff'
 
@@ -59,7 +59,7 @@ const CreateStaffForm = () => {
     }
   )
 
-  const { data } = useQuery(GET_CURRENT_STORE_LOGIN_USER_ID)
+  const { data } = useQuery(GET_CURRENT_STORE_LOGIN_USER)
 
   const currentStoreLoginId = data ? data.currentStoreLogin.id : ''
 

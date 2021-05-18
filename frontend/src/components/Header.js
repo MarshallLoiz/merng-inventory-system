@@ -23,7 +23,7 @@ import useStyles from '../jss/header'
 import cookieChecker from '../utils/cookieChecker'
 import { useMutation, useQuery } from '@apollo/client'
 import { LOGOUT_STORE } from '../gql/Mutation'
-import { GET_CURRENT_STORE_LOGIN_USER_FOR_HEADER } from '../gql/Query'
+import { GET_CURRENT_STORE_LOGIN_USER } from '../gql/Query'
 
 const Header = ({ headerState }) => {
   const classes = useStyles()
@@ -32,7 +32,7 @@ const Header = ({ headerState }) => {
   const [dropdownAnchor, setDropdownAnchor] = useState(null)
   const history = useHistory()
 
-  const { loading, data } = useQuery(GET_CURRENT_STORE_LOGIN_USER_FOR_HEADER, {
+  const { loading, data } = useQuery(GET_CURRENT_STORE_LOGIN_USER, {
     skip: !cookieChecker(),
   })
 
@@ -107,7 +107,7 @@ const Header = ({ headerState }) => {
               <ListItemText primary='Store Details' />
             </ListItem>
 
-            <ListItem button>
+            <ListItem button selected>
               <ListItemIcon>
                 <PeopleIcon />
               </ListItemIcon>

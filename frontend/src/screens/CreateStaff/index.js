@@ -20,7 +20,7 @@ const CreateStaff = () => {
 
   return (
     <div>
-      <Header />
+      <Header headerState='Staffs' />
       <Grid container>
         <div className={classes.createStaffRoot}>
           <Paper elevation={3}>
